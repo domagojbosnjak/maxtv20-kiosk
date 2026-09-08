@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=1920, height=1200, initial-scale=1.0, user-scalable=no">
+  <title>MAXtv 20 godina - Nagradna igra</title>
+  <meta name="theme-color" content="#E6007E">
+  <meta name="mobile-web-app-capable" content="yes">
+  <link rel="apple-touch-icon" href="icon-192.png">
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="style.css?v=1">
+</head>
+<body>
+  <div id="app">
+
+    <!-- SETUP SCREEN (first launch only - names this tablet's location) -->
+    <div id="screen-setup" class="screen" style="display:none;">
+      <div class="screen-content setup-content">
+        <h2 class="setup-title">Postavljanje uređaja</h2>
+        <p class="setup-hint">Upišite naziv lokacije / poslovnice:</p>
+        <input type="text" id="setup-custom" class="setup-input" placeholder="NPR. ZAGREB - AVENUE MALL" maxlength="40" autocomplete="off" readonly>
+        <button class="btn-primary" onclick="saveSetupLocation()">Spremi i započni</button>
+      </div>
+    </div>
+
+    <!-- T LOGO - fixed on all screens except welcome -->
+    <img src="ht-logo-white.svg" alt="T" class="t-logo-fixed t-logo-hidden" id="t-logo">
+
+    <!-- SCREEN 1 - WELCOME -->
+    <div id="screen-welcome" class="screen active">
+      <div class="screen-content welcome-content">
+        <h1 class="welcome-heading">MAXtv<br>20 godina dio<br>vašeg programa!</h1>
+        <p class="welcome-subtitle">Povodom rođendana nagrađujemo<br>20 vjernih korisnika Samsung televizorom!</p>
+        <button class="btn-primary" onclick="showRegistrationScreen()">Pokrenite i osvojite!</button>
+      </div>
+    </div>
+
+    <!-- SCREEN 2 - REGISTRATION -->
+    <div id="screen-registration" class="screen">
+      <div class="screen-content registration-content">
+        <div class="reg-field">
+          <label class="reg-label">Ime i prezime</label>
+          <input type="text" id="reg-name" class="reg-input" placeholder="" maxlength="40" autocomplete="off" readonly>
+        </div>
+        <div class="reg-field">
+          <label class="reg-label">Broj mobitela</label>
+          <input type="tel" id="reg-phone" class="reg-input" placeholder="" maxlength="15" autocomplete="off" readonly>
+        </div>
+        <div class="gdpr-row">
+          <div class="gdpr-consent" id="gdpr-consent" onclick="toggleGdpr()">
+            <div class="gdpr-checkbox" id="gdpr-check"></div>
+            <span class="gdpr-text">Pristajem na prikupljanje i obradu osobnih podataka u svrhu sudjelovanja u nagradnoj igri, u skladu s Općom uredbom o zaštiti podataka (GDPR). Prikupljeni podaci služit će za obavještavanje dobitnika o nagradi i promotivnim ponudama Hrvatskog Telekoma.</span>
+          </div>
+          <button class="btn-primary" id="btn-reg-next" onclick="submitRegistration()" disabled>Dalje</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- SCREEN 3 - QUESTION 1: TV -->
+    <div id="screen-q1" class="screen">
+      <div class="screen-content question-content">
+        <h2 class="question-title">Koju TV gledate doma?</h2>
+        <div class="options-list" id="q1-options">
+          <div class="option-row" data-value="MAXtv" onclick="selectOption('q1', this)">
+            <div class="option-radio"></div><span class="option-label">MAXtv</span>
+          </div>
+          <div class="option-row" data-value="A1 TV" onclick="selectOption('q1', this)">
+            <div class="option-radio"></div><span class="option-label">A1 TV</span>
+          </div>
+          <div class="option-row" data-value="EON TV" onclick="selectOption('q1', this)">
+            <div class="option-radio"></div><span class="option-label">EON TV</span>
+          </div>
+          <div class="option-row" data-value="ostalo" onclick="selectOption('q1', this)">
+            <div class="option-radio"></div><span class="option-label">ostalo</span>
+          </div>
+        </div>
+        <button class="btn-primary btn-bottom-right" id="btn-q1-next" onclick="goToQuestion2()" disabled>Dalje</button>
+      </div>
+    </div>
+
+    <!-- SCREEN 4 - QUESTION 2: INTERNET -->
+    <div id="screen-q2" class="screen">
+      <div class="screen-content question-content">
+        <h2 class="question-title">Koji fiksni internet imate doma?</h2>
+        <div class="options-list" id="q2-options">
+          <div class="option-row" data-value="HT" onclick="selectOption('q2', this)">
+            <div class="option-radio"></div><span class="option-label">HT</span>
+          </div>
+          <div class="option-row" data-value="A1" onclick="selectOption('q2', this)">
+            <div class="option-radio"></div><span class="option-label">A1</span>
+          </div>
+          <div class="option-row" data-value="Telemach" onclick="selectOption('q2', this)">
+            <div class="option-radio"></div><span class="option-label">Telemach</span>
+          </div>
+          <div class="option-row" data-value="ostalo" onclick="selectOption('q2', this)">
+            <div class="option-radio"></div><span class="option-label">ostalo</span>
+          </div>
+        </div>
+        <button class="btn-primary btn-bottom-right" id="btn-q2-next" onclick="finishSurvey()" disabled>Dalje</button>
+      </div>
+    </div>
+
+    <!-- SCREEN 5 - THANK YOU -->
+    <div id="screen-thankyou" class="screen">
+      <div class="screen-content thankyou-content">
+        <h2 class="thankyou-title">Hvala na sudjelovanju!<br>Sretne dobitnike<br>izvlačimo 4.11.2026.</h2>
+      </div>
+    </div>
+
+    <!-- CUSTOM KEYBOARD -->
+    <div id="keyboard" class="keyboard">
+      <div class="keyboard-row" id="kb-row-1"></div>
+      <div class="keyboard-row" id="kb-row-2"></div>
+      <div class="keyboard-row" id="kb-row-3"></div>
+      <div class="keyboard-row" id="kb-row-4"></div>
+    </div>
+
+    <!-- EXIT / ADMIN OVERLAY (triple tap top-right corner) -->
+    <div id="exit-overlay" class="exit-overlay">
+      <p class="exit-overlay-title">Admin meni</p>
+      <button class="exit-btn exit-btn-primary" onclick="location.reload();">Restart</button>
+      <button class="exit-btn" onclick="localStorage.removeItem('maxtv20_location'); location.reload();">Promijeni lokaciju</button>
+      <button class="exit-btn exit-btn-light" onclick="document.getElementById('exit-overlay').style.display='none';">Natrag u app</button>
+    </div>
+
+  </div>
+
+  <script src="supabase-config.js?v=1"></script>
+  <script src="app.js?v=1"></script>
+  <script>
+    // Screen Wake Lock - keep the tablet display on at all times (required: screen must never sleep/black out)
+    let wakeLock = null;
+    async function requestWakeLock() {
+      try {
+        if ('wakeLock' in navigator) {
+          wakeLock = await navigator.wakeLock.request('screen');
+          wakeLock.addEventListener('release', () => {});
+        }
+      } catch (e) { /* wake lock not available - Fully Kiosk Browser's own "keep screen on" setting covers this */ }
+    }
+    requestWakeLock();
+    document.addEventListener('visibilitychange', () => {
+      if (document.visibilityState === 'visible') requestWakeLock();
+    });
+
+    // Fullscreen on first tap (falls back gracefully if the kiosk browser already forces fullscreen)
+    document.addEventListener('click', function() {
+      var el = document.documentElement;
+      if (!document.fullscreenElement) {
+        try { (el.requestFullscreen || el.webkitRequestFullscreen).call(el); } catch(e) {}
+      }
+    }, { once: true });
+
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('./sw.js').catch(function(){});
+    }
+  </script>
+</body>
+</html>
