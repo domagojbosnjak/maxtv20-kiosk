@@ -1,5 +1,5 @@
-const SUPABASE_URL = 'https://iybodgndmwabjvmftlqo.supabase.co';
-const SUPABASE_ANON_KEY = 'sb_publishable_Ky-VAlQqBBomjKqGXGGx5Q__qvEu5OH';
+const SUPABASE_URL = 'https://fhufpkclrfbncfkmyabe.supabase.co';
+const SUPABASE_ANON_KEY = 'sb_publishable_HmWXpiWlpxUwg7RdSU9kpA_lsN9TKG-';
 const SUPABASE_TABLE = 'maxtv20_prijave';
 
 let supabaseClient = null;
