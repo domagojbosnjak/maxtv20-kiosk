@@ -2,7 +2,7 @@
 <html lang="hr">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=1920, height=1200, initial-scale=1.0, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <title>MAXtv 20 godina - Nagradna igra</title>
   <meta name="theme-color" content="#E6007E">
   <meta name="mobile-web-app-capable" content="yes">
@@ -128,6 +128,31 @@
   <script src="supabase-config.js?v=1"></script>
   <script src="app.js?v=1"></script>
   <script>
+    // Orientation-aware canvas fit: #app is a fixed-size design canvas
+    // (1920x1200 landscape / 1200x1920 portrait). Whenever the tablet is
+    // rotated we swap the canvas size and scale+center it to fill whatever
+    // the device actually reports, so the quiz keeps working in both
+    // orientations without any dead/cropped areas.
+    function fitCanvas() {
+      var vw = window.innerWidth;
+      var vh = window.innerHeight;
+      var isPortrait = vh > vw;
+      document.documentElement.classList.toggle('orientation-portrait', isPortrait);
+      document.documentElement.classList.toggle('orientation-landscape', !isPortrait);
+      var targetW = isPortrait ? 1200 : 1920;
+      var targetH = isPortrait ? 1920 : 1200;
+      var scale = Math.min(vw / targetW, vh / targetH);
+      var offsetX = (vw - targetW * scale) / 2;
+      var offsetY = (vh - targetH * scale) / 2;
+      var app = document.getElementById('app');
+      if (app) {
+        app.style.transform = 'translate(' + offsetX + 'px,' + offsetY + 'px) scale(' + scale + ')';
+      }
+    }
+    fitCanvas();
+    window.addEventListener('resize', fitCanvas);
+    window.addEventListener('orientationchange', function() { setTimeout(fitCanvas, 50); });
+
     // Screen Wake Lock - keep the tablet display on at all times (required: screen must never sleep/black out)
     let wakeLock = null;
     async function requestWakeLock() {

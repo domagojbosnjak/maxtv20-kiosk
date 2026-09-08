@@ -69,10 +69,15 @@
   --font-body: 'TeleNeoOriginal', 'TeleNeo', sans-serif;
 }
 
-/* Fixed landscape tablet canvas: 1920x1200 */
+/* Real device viewport - fills whatever the tablet reports, in either
+   orientation. The actual layout canvas is #app, a fixed-size surface
+   (1920x1200 landscape, or 1200x1920 portrait) that gets scaled+centered
+   into this viewport by fitCanvas() in index.html whenever the tablet is
+   rotated. Background here matches the canvas so any letterbox edge is
+   invisible. */
 html, body {
-  width: 1920px;
-  height: 1200px;
+  width: 100vw;
+  height: 100vh;
   overflow: hidden;
   font-family: var(--font-body);
   font-weight: 400;
@@ -84,8 +89,17 @@ html, body {
 #app {
   width: 1920px;
   height: 1200px;
-  position: relative;
+  position: fixed;
+  top: 0;
+  left: 0;
+  transform-origin: top left;
   overflow: hidden;
+  background: var(--magenta);
+}
+
+html.orientation-portrait #app {
+  width: 1200px;
+  height: 1920px;
 }
 
 .screen {
@@ -562,4 +576,138 @@ html, body {
 .exit-btn-light {
   background: #fff;
   color: #000;
+}
+
+/* ============================================================
+   PORTRAIT ORIENTATION (tablet rotated) - canvas is 1200x1920.
+   Same screens, same brand language, reflowed for a narrower,
+   taller surface. Toggled automatically by fitCanvas() in
+   index.html whenever the device orientation changes.
+   ============================================================ */
+
+.orientation-portrait .screen-content {
+  padding: 110px 80px;
+}
+
+.orientation-portrait .t-logo-fixed {
+  top: 48px;
+  right: 48px;
+  width: 72px;
+}
+
+/* Welcome */
+.orientation-portrait .welcome-content {
+  gap: 48px;
+  max-width: none;
+}
+
+.orientation-portrait .welcome-heading {
+  font-size: 64px;
+}
+
+.orientation-portrait .welcome-subtitle {
+  font-size: 32px;
+  max-width: 900px;
+}
+
+/* Buttons */
+.orientation-portrait .btn-primary {
+  padding: 34px 52px;
+  font-size: 30px;
+}
+
+.orientation-portrait .btn-bottom-right {
+  right: 80px;
+  bottom: 90px;
+}
+
+/* Registration */
+.orientation-portrait .registration-content {
+  gap: 56px;
+  max-width: none;
+}
+
+.orientation-portrait .reg-label {
+  font-size: 40px;
+}
+
+.orientation-portrait .reg-input {
+  font-size: 32px;
+  max-width: none;
+}
+
+.orientation-portrait .gdpr-row {
+  flex-direction: column;
+  align-items: stretch;
+  gap: 40px;
+}
+
+.orientation-portrait .gdpr-consent {
+  max-width: none;
+}
+
+.orientation-portrait .gdpr-text {
+  font-size: 22px;
+}
+
+.orientation-portrait #btn-reg-next {
+  align-self: flex-start;
+}
+
+/* Survey questions */
+.orientation-portrait .question-content {
+  gap: 56px;
+  max-width: none;
+}
+
+.orientation-portrait .question-title {
+  font-size: 52px;
+}
+
+.orientation-portrait .options-list {
+  gap: 40px;
+}
+
+.orientation-portrait .option-radio {
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  border-width: 3px;
+}
+
+.orientation-portrait .option-radio::after {
+  width: 22px;
+  height: 22px;
+}
+
+.orientation-portrait .option-label {
+  font-size: 36px;
+}
+
+/* Thank you */
+.orientation-portrait .thankyou-content {
+  max-width: none;
+}
+
+.orientation-portrait .thankyou-title {
+  font-size: 56px;
+}
+
+/* Keyboard - slightly shorter keys so it takes up less of the tall canvas */
+.orientation-portrait .kb-key {
+  height: 62px;
+}
+
+/* Admin/exit overlay - stack buttons instead of a row (too narrow otherwise) */
+.orientation-portrait .exit-overlay {
+  flex-direction: column;
+  gap: 24px;
+}
+
+.orientation-portrait .exit-overlay-title {
+  top: 140px;
+}
+
+.orientation-portrait .exit-btn {
+  width: 700px;
 }

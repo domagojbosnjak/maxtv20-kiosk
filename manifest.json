@@ -4,7 +4,7 @@
   "description": "MAXtv slavi 20 godina! Sudjeluj i osvoji Samsung televizor.",
   "start_url": "./index.html",
   "display": "fullscreen",
-  "orientation": "landscape",
+  "orientation": "any",
   "background_color": "#E6007E",
   "theme_color": "#E6007E",
   "icons": [
