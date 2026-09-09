@@ -125,7 +125,7 @@ html.orientation-portrait #app {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 90px 140px;
+  padding: 240px 210px 200px;
 }
 
 /* ===== T LOGO (fixed, all screens except welcome) ===== */
@@ -181,7 +181,8 @@ html.orientation-portrait #app {
 .welcome-content {
   justify-content: center;
   gap: 56px;
-  max-width: 1150px;
+  max-width: none;
+  padding-left: 360px;
 }
 
 .welcome-heading {
@@ -227,8 +228,8 @@ html.orientation-portrait #app {
 
 .btn-bottom-right {
   position: absolute;
-  right: 140px;
-  bottom: 100px;
+  right: 150px;
+  bottom: 235px;
 }
 
 /* ===== REGISTRATION SCREEN ===== */
