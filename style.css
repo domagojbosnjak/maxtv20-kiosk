@@ -540,9 +540,11 @@ html.orientation-portrait #app {
   background: #000;
   z-index: 9999;
   flex-direction: row;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: center;
-  gap: 32px;
+  gap: 28px;
+  padding: 0 60px;
 }
 
 .exit-overlay-title {
@@ -558,7 +560,7 @@ html.orientation-portrait #app {
 
 .exit-btn {
   padding: 32px 52px;
-  width: 480px;
+  width: 420px;
   background: #333;
   color: #fff;
   border: none;

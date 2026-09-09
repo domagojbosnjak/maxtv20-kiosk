@@ -8,7 +8,7 @@
   <meta name="mobile-web-app-capable" content="yes">
   <link rel="apple-touch-icon" href="icon-192.png">
   <link rel="manifest" href="manifest.json">
-  <link rel="stylesheet" href="style.css?v=2">
+  <link rel="stylesheet" href="style.css?v=3">
 </head>
 <body>
   <div id="app">
@@ -115,18 +115,22 @@
       <div class="keyboard-row" id="kb-row-4"></div>
     </div>
 
-    <!-- EXIT / ADMIN OVERLAY (triple tap top-right corner) -->
+    <!-- EXIT / ADMIN OVERLAY (triple tap top-right corner) - this is the
+         ONLY intentional way to leave the kiosk. It requires 3 taps in the
+         exact top-right 150x150px corner within 1.5s, so a regular
+         participant will never stumble into it by accident. -->
     <div id="exit-overlay" class="exit-overlay">
       <p class="exit-overlay-title">Admin meni</p>
-      <button class="exit-btn exit-btn-primary" onclick="location.reload();">Restart</button>
+      <button class="exit-btn exit-btn-primary" onclick="try{document.exitFullscreen();}catch(e){} try{window.open('','_self');window.close();}catch(e){} setTimeout(function(){try{window.close();}catch(e){} window.location.replace('about:blank');},300);">Izađi iz aplikacije</button>
+      <button class="exit-btn" onclick="location.reload();">Restart</button>
       <button class="exit-btn" onclick="localStorage.removeItem('maxtv20_location'); location.reload();">Promijeni lokaciju</button>
       <button class="exit-btn exit-btn-light" onclick="document.getElementById('exit-overlay').style.display='none';">Natrag u app</button>
     </div>
 
   </div>
 
-  <script src="supabase-config.js?v=2"></script>
-  <script src="app.js?v=2"></script>
+  <script src="supabase-config.js?v=3"></script>
+  <script src="app.js?v=3"></script>
   <script>
     // Orientation-aware canvas fit: #app is a fixed-size design canvas
     // (1920x1200 landscape / 1200x1920 portrait). Whenever the tablet is
