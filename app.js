@@ -374,7 +374,7 @@ function clearAutoReturn() {
   if (autoReturnTimer) { clearTimeout(autoReturnTimer); autoReturnTimer = null; }
 }
 
-// ===== INACTIVITY TIMER (90s) =====
+// ===== INACTIVITY TIMER (30s) =====
 let inactivityTimer = null;
 var inactivityScreens = ['screen-registration', 'screen-q1', 'screen-q2'];
 
@@ -382,7 +382,7 @@ function startInactivityTimer() {
   clearInactivityTimer();
   var activeScreen = document.querySelector('.screen.active');
   if (activeScreen && inactivityScreens.includes(activeScreen.id)) {
-    inactivityTimer = setTimeout(() => { goToStart(); }, 90000);
+    inactivityTimer = setTimeout(() => { goToStart(); }, 30000);
   }
 }
 
