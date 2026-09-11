@@ -8,7 +8,7 @@
   <meta name="mobile-web-app-capable" content="yes">
   <link rel="apple-touch-icon" href="icon-192.png">
   <link rel="manifest" href="manifest.json">
-  <link rel="stylesheet" href="style.css?v=6">
+  <link rel="stylesheet" href="style.css?v=7">
 </head>
 <body>
   <div id="app">
@@ -29,12 +29,15 @@
     <!-- SCREEN 1 - WELCOME -->
     <div id="screen-welcome" class="screen active">
       <div class="screen-content welcome-content">
-        <h1 class="welcome-heading">MAXtv<br>20 godina dio<br>vašeg programa!</h1>
-        <p class="welcome-subtitle">Povodom rođendana nagrađujemo<br>20 vjernih korisnika Samsung televizorom!</p>
-        <div class="welcome-buttons">
-          <button class="btn-primary" onclick="showRegistrationScreen()">SUDJELUJ</button>
-          <button class="btn-outline" onclick="showRulesScreen()">VIŠE INFORMACIJA</button>
+        <div class="welcome-text">
+          <h1 class="welcome-heading">MAXtv<br>20 godina dio<br>vašeg programa!</h1>
+          <p class="welcome-subtitle">Povodom rođendana nagrađujemo<br>20 vjernih korisnika Samsung televizorom!</p>
+          <div class="welcome-buttons">
+            <button class="btn-primary" onclick="showRegistrationScreen()">SUDJELUJ</button>
+            <button class="btn-outline" onclick="showRulesScreen()">VIŠE INFORMACIJA</button>
+          </div>
         </div>
+        <img src="nagrada-tv.png" alt="Samsung OLED televizor - nagrada" class="welcome-tv-image">
       </div>
     </div>
 
@@ -155,8 +158,8 @@
 
   </div>
 
-  <script src="supabase-config.js?v=6"></script>
-  <script src="app.js?v=6"></script>
+  <script src="supabase-config.js?v=7"></script>
+  <script src="app.js?v=7"></script>
   <script>
     // Orientation-aware canvas fit: #app is a fixed-size design canvas
     // (1920x1200 landscape / 1200x1920 portrait). Whenever the tablet is

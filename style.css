@@ -179,10 +179,20 @@ html.orientation-portrait #app {
 
 /* ===== WELCOME SCREEN ===== */
 .welcome-content {
-  justify-content: center;
-  gap: 56px;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
   max-width: none;
-  padding-left: 360px;
+  padding-left: 260px;
+  gap: 40px;
+}
+
+.welcome-text {
+  display: flex;
+  flex-direction: column;
+  gap: 56px;
+  max-width: 1000px;
+  flex-shrink: 0;
 }
 
 .welcome-heading {
@@ -199,6 +209,15 @@ html.orientation-portrait #app {
   line-height: 1.35;
   color: var(--gray-text);
   max-width: 900px;
+}
+
+.welcome-tv-image {
+  width: 620px;
+  max-width: 40vw;
+  height: auto;
+  object-fit: contain;
+  flex-shrink: 0;
+  filter: drop-shadow(0 30px 60px rgba(0,0,0,0.35));
 }
 
 .welcome-buttons {
@@ -665,12 +684,24 @@ html.orientation-portrait #app {
 
 /* Welcome */
 .orientation-portrait .welcome-content {
-  gap: 48px;
+  flex-direction: column;
+  justify-content: center;
+  gap: 40px;
+  max-width: none;
+}
+
+.orientation-portrait .welcome-text {
+  gap: 40px;
   max-width: none;
 }
 
 .orientation-portrait .welcome-heading {
   font-size: 64px;
+}
+
+.orientation-portrait .welcome-tv-image {
+  width: 420px;
+  max-width: 70vw;
 }
 
 .orientation-portrait .welcome-subtitle {
