@@ -177,21 +177,25 @@ html.orientation-portrait #app {
   letter-spacing: 1px;
 }
 
-/* ===== WELCOME SCREEN ===== */
+/* ===== WELCOME SCREEN =====
+   Text + TV image treated as one centered composition (not edge-anchored):
+   both are fixed-width flex children, centered as a pair with a shared gap,
+   so the whole group reads as a single balanced unit on screen. */
 .welcome-content {
   flex-direction: row;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   max-width: none;
-  padding-left: 260px;
-  gap: 40px;
+  padding-left: 100px;
+  padding-right: 100px;
+  gap: 100px;
 }
 
 .welcome-text {
   display: flex;
   flex-direction: column;
   gap: 56px;
-  max-width: 1000px;
+  max-width: 780px;
   flex-shrink: 0;
 }
 
@@ -208,12 +212,12 @@ html.orientation-portrait #app {
   font-weight: 400;
   line-height: 1.35;
   color: var(--gray-text);
-  max-width: 900px;
+  max-width: 780px;
 }
 
 .welcome-tv-image {
-  width: 620px;
-  max-width: 40vw;
+  width: 820px;
+  max-width: 42vw;
   height: auto;
   object-fit: contain;
   flex-shrink: 0;
