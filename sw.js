@@ -1,25 +1,23 @@
-var CACHE_NAME = 'maxtv20-v12';
+var CACHE_NAME = 'maxtv20-v13';
 
 var ASSETS = [
   './',
   './index.html',
-  './style.css?v=12',
-  './app.js?v=12',
-  './supabase-config.js?v=12',
+  './style.css?v=13',
+  './app.js?v=13',
+  './supabase-config.js?v=13',
   './manifest.json',
   './ht-logo-white.svg',
   './icon-192.png',
   './icon-512.png',
-  './nagrada-tv.png',
-  './nagrada-tv-2.png',
+  './nagrada-tv.webp',
+  './nagrada-tv-2.webp',
   './fonts/TeleNeo-ExtraBold.woff2',
   './fonts/TeleNeo-Thin.woff2',
   './fonts/TeleNeoWeb-Regular.woff2',
   './fonts/TeleNeoWeb-Medium.woff2',
   './fonts/TeleNeoWeb-Bold.woff2',
-  './fonts/TeleNeoWeb-ExtraBold.woff2',
-  './fonts/TeleNeo-Regular.otf',
-  './fonts/TeleNeo-Medium.otf'
+  './fonts/TeleNeoWeb-ExtraBold.woff2'
 ];
 
 self.addEventListener('install', function(e) {
