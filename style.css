@@ -186,17 +186,10 @@ html.orientation-portrait #app {
   flex-shrink: 0;
 }
 
-/* Anti-burn-in: intro heading+subtitle briefly fade out (see app.js) so this
-   static kiosk screen doesn't leave a permanent ghost on the panel. */
 .welcome-intro-text {
   display: flex;
   flex-direction: column;
   gap: 56px;
-  transition: opacity 0.8s ease;
-}
-
-.welcome-intro-text.dimmed {
-  opacity: 0;
 }
 
 .welcome-heading {
@@ -207,9 +200,12 @@ html.orientation-portrait #app {
 }
 
 .welcome-subtitle {
-  font-family: var(--font-body);
+  /* 'TeleNeoOriginal' (var(--font-body)) only has Thin(100)/ExtraBold(800)
+     faces, so weight 400 was silently rendering as Thin - looked too light.
+     'TeleNeo' has a real Regular/Medium face, so use it directly here. */
+  font-family: 'TeleNeo', sans-serif;
   font-size: 40px;
-  font-weight: 400;
+  font-weight: 500;
   line-height: 1.35;
   color: var(--gray-text);
   max-width: 780px;
@@ -260,17 +256,22 @@ html.orientation-portrait #app {
   align-self: auto;
 }
 
-/* ===== BUTTONS (pill, white on magenta) ===== */
+/* ===== BUTTONS (pill, white on magenta) =====
+   Text-transform:uppercase here (not hardcoded caps in the HTML) is what
+   keeps every CTA - regardless of how its label is typed - visually
+   consistent, so labels don't drift between caps and sentence case again. */
 .btn-primary {
   align-self: flex-start;
-  padding: 40px 64px;
+  padding: 30px 48px;
   background: var(--white);
   color: var(--magenta);
   border: none;
   border-radius: 100px;
   font-family: var(--font-heading);
-  font-size: 36px;
+  font-size: 28px;
   font-weight: 800;
+  text-transform: uppercase;
+  text-align: center;
   cursor: pointer;
   transition: transform 0.15s ease, box-shadow 0.15s ease;
   letter-spacing: 0.3px;
@@ -287,14 +288,16 @@ html.orientation-portrait #app {
 
 .btn-outline {
   align-self: flex-start;
-  padding: 40px 64px;
+  padding: 30px 48px;
   background: transparent;
   color: var(--white);
-  border: 3px solid var(--white);
+  border: 5px solid var(--white);
   border-radius: 100px;
   font-family: var(--font-heading);
-  font-size: 36px;
+  font-size: 28px;
   font-weight: 800;
+  text-transform: uppercase;
+  text-align: center;
   cursor: pointer;
   transition: transform 0.15s ease;
   letter-spacing: 0.3px;
@@ -744,8 +747,8 @@ html.orientation-portrait #app {
 /* Buttons */
 .orientation-portrait .btn-primary,
 .orientation-portrait .btn-outline {
-  padding: 34px 52px;
-  font-size: 30px;
+  padding: 26px 40px;
+  font-size: 24px;
 }
 
 .orientation-portrait .btn-bottom-right {

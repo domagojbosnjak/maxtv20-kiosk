@@ -423,47 +423,44 @@ document.addEventListener('contextmenu', function(e) { e.preventDefault(); });
 
 buildKeyboard('alpha');
 
-// ===== WELCOME TV IMAGE CAROUSEL =====
+// ===== WELCOME SCREEN: ONE COORDINATED ANTI-BURN-IN CYCLE =====
+// Previously the TV carousel, the button swap and the text fade each ran on
+// their own independent timer, so they drifted in and out of phase with
+// each other - it read as random, unrelated movement. Now everything ticks
+// together on a single clock: every ANTI_BURN_IN_TICK_MS, the TV image
+// advances AND the buttons swap places in the same beat, so there's one
+// clear, predictable rhythm instead of three overlapping ones.
 (function() {
-  const slides = document.querySelectorAll('.tv-slide');
-  if (slides.length < 2) return;
-  let current = 0;
-  setInterval(function() {
-    slides[current].classList.remove('active');
-    current = (current + 1) % slides.length;
-    slides[current].classList.add('active');
-  }, 4500);
-})();
+  const ANTI_BURN_IN_TICK_MS = 6000;
 
-// ===== ANTI-BURN-IN: SUDJELUJ / VISE INFORMACIJA SWAP PLACES (every 4.5s) =====
-(function() {
-  const container = document.querySelector('.welcome-buttons');
+  const slides = document.querySelectorAll('.tv-slide');
+  const buttonRow = document.querySelector('.welcome-buttons');
   const btn1 = document.getElementById('btn-swap-1');
   const btn2 = document.getElementById('btn-swap-2');
-  if (!container || !btn1 || !btn2) return;
+
+  let currentSlide = 0;
   let swapped = false;
-  function applySwap() {
-    if (swapped) {
-      const gap = parseFloat(getComputedStyle(container).gap) || 0;
-      btn1.style.transform = 'translateX(' + (btn2.offsetWidth + gap) + 'px)';
-      btn2.style.transform = 'translateX(-' + (btn1.offsetWidth + gap) + 'px)';
-    } else {
-      btn1.style.transform = '';
-      btn2.style.transform = '';
+
+  function tick() {
+    if (slides.length >= 2) {
+      slides[currentSlide].classList.remove('active');
+      currentSlide = (currentSlide + 1) % slides.length;
+      slides[currentSlide].classList.add('active');
+    }
+    if (buttonRow && btn1 && btn2) {
+      swapped = !swapped;
+      if (swapped) {
+        const gap = parseFloat(getComputedStyle(buttonRow).gap) || 0;
+        btn1.style.transform = 'translateX(' + (btn2.offsetWidth + gap) + 'px)';
+        btn2.style.transform = 'translateX(-' + (btn1.offsetWidth + gap) + 'px)';
+      } else {
+        btn1.style.transform = '';
+        btn2.style.transform = '';
+      }
     }
   }
-  setInterval(function() {
-    swapped = !swapped;
-    applySwap();
-  }, 4500);
-})();
 
-// ===== ANTI-BURN-IN: INTRO TEXT FADES OUT FOR 2s EVERY 8s =====
-(function() {
-  const introText = document.querySelector('.welcome-intro-text');
-  if (!introText) return;
-  setInterval(function() {
-    introText.classList.add('dimmed');
-    setTimeout(function() { introText.classList.remove('dimmed'); }, 2000);
-  }, 8000);
+  if (slides.length >= 2 || (buttonRow && btn1 && btn2)) {
+    setInterval(tick, ANTI_BURN_IN_TICK_MS);
+  }
 })();
