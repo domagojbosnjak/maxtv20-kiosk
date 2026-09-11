@@ -422,3 +422,15 @@ history.pushState(null, '', location.href);
 document.addEventListener('contextmenu', function(e) { e.preventDefault(); });
 
 buildKeyboard('alpha');
+
+// ===== WELCOME TV IMAGE CAROUSEL =====
+(function() {
+  const slides = document.querySelectorAll('.tv-slide');
+  if (slides.length < 2) return;
+  let current = 0;
+  setInterval(function() {
+    slides[current].classList.remove('active');
+    current = (current + 1) % slides.length;
+    slides[current].classList.add('active');
+  }, 4500);
+})();

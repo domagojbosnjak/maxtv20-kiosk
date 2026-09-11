@@ -1,16 +1,17 @@
-var CACHE_NAME = 'maxtv20-v8';
+var CACHE_NAME = 'maxtv20-v9';
 
 var ASSETS = [
   './',
   './index.html',
-  './style.css?v=8',
-  './app.js?v=8',
-  './supabase-config.js?v=8',
+  './style.css?v=9',
+  './app.js?v=9',
+  './supabase-config.js?v=9',
   './manifest.json',
   './ht-logo-white.svg',
   './icon-192.png',
   './icon-512.png',
   './nagrada-tv.png',
+  './nagrada-tv-2.png',
   './fonts/TeleNeo-ExtraBold.woff2',
   './fonts/TeleNeo-Thin.woff2',
   './fonts/TeleNeoWeb-Regular.woff2',

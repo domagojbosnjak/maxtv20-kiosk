@@ -8,7 +8,7 @@
   <meta name="mobile-web-app-capable" content="yes">
   <link rel="apple-touch-icon" href="icon-192.png">
   <link rel="manifest" href="manifest.json">
-  <link rel="stylesheet" href="style.css?v=8">
+  <link rel="stylesheet" href="style.css?v=9">
 </head>
 <body>
   <div id="app">
@@ -37,7 +37,10 @@
             <button class="btn-outline" onclick="showRulesScreen()">VIŠE INFORMACIJA</button>
           </div>
         </div>
-        <img src="nagrada-tv.png" alt="Samsung OLED televizor - nagrada" class="welcome-tv-image">
+        <div class="welcome-tv-carousel">
+          <img src="nagrada-tv.png" alt="Samsung OLED televizor - nagrada" class="tv-slide active">
+          <img src="nagrada-tv-2.png" alt="Samsung OLED televizor - nagrada, bocni prikaz" class="tv-slide">
+        </div>
       </div>
     </div>
 
@@ -158,8 +161,8 @@
 
   </div>
 
-  <script src="supabase-config.js?v=8"></script>
-  <script src="app.js?v=8"></script>
+  <script src="supabase-config.js?v=9"></script>
+  <script src="app.js?v=9"></script>
   <script>
     // Orientation-aware canvas fit: #app is a fixed-size design canvas
     // (1920x1200 landscape / 1200x1920 portrait). Whenever the tablet is
