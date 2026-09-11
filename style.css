@@ -201,6 +201,19 @@ html.orientation-portrait #app {
   max-width: 900px;
 }
 
+.welcome-buttons {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 28px;
+}
+
+.welcome-buttons .btn-primary,
+.welcome-buttons .btn-outline {
+  align-self: auto;
+}
+
 /* ===== BUTTONS (pill, white on magenta) ===== */
 .btn-primary {
   align-self: flex-start;
@@ -224,6 +237,25 @@ html.orientation-portrait #app {
 .btn-primary:disabled {
   opacity: 0.4;
   cursor: not-allowed;
+}
+
+.btn-outline {
+  align-self: flex-start;
+  padding: 40px 64px;
+  background: transparent;
+  color: var(--white);
+  border: 3px solid var(--white);
+  border-radius: 100px;
+  font-family: var(--font-heading);
+  font-size: 36px;
+  font-weight: 800;
+  cursor: pointer;
+  transition: transform 0.15s ease;
+  letter-spacing: 0.3px;
+}
+
+.btn-outline:active {
+  transform: scale(0.97);
 }
 
 .btn-bottom-right {
@@ -400,6 +432,39 @@ html.orientation-portrait #app {
   font-size: 76px;
   font-weight: 800;
   line-height: 1.2;
+}
+
+/* ===== RULES SCREEN (pravila nagradnog natjecaja) ===== */
+.rules-content {
+  padding: 140px 150px 100px 210px;
+  gap: 36px;
+}
+
+.rules-title {
+  font-family: var(--font-heading);
+  font-size: 52px;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+.rules-text {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  font-family: var(--font-body);
+  font-size: 26px;
+  font-weight: 400;
+  line-height: 1.55;
+  padding-right: 40px;
+}
+
+.rules-text p {
+  margin-bottom: 22px;
+}
+
+.rules-text strong {
+  font-weight: 800;
 }
 
 /* ===== CUSTOM KEYBOARD ===== */
@@ -614,7 +679,8 @@ html.orientation-portrait #app {
 }
 
 /* Buttons */
-.orientation-portrait .btn-primary {
+.orientation-portrait .btn-primary,
+.orientation-portrait .btn-outline {
   padding: 34px 52px;
   font-size: 30px;
 }
@@ -685,6 +751,21 @@ html.orientation-portrait #app {
 
 .orientation-portrait .option-label {
   font-size: 36px;
+}
+
+/* Rules */
+.orientation-portrait .rules-content {
+  padding: 110px 80px 60px;
+  gap: 24px;
+}
+
+.orientation-portrait .rules-title {
+  font-size: 40px;
+}
+
+.orientation-portrait .rules-text {
+  font-size: 22px;
+  padding-right: 20px;
 }
 
 /* Thank you */

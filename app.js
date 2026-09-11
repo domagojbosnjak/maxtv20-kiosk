@@ -61,6 +61,11 @@ function showRegistrationScreen() {
   startInactivityTimer();
 }
 
+function showRulesScreen() {
+  showScreen('screen-rules');
+  startInactivityTimer();
+}
+
 // ===== KEYBOARD =====
 const KEYS_ALPHA = [
   ['Q','W','E','R','T','Z','U','I','O','P'],
@@ -376,7 +381,7 @@ function clearAutoReturn() {
 
 // ===== INACTIVITY TIMER (30s) =====
 let inactivityTimer = null;
-var inactivityScreens = ['screen-registration', 'screen-q1', 'screen-q2'];
+var inactivityScreens = ['screen-registration', 'screen-rules', 'screen-q1', 'screen-q2'];
 
 function startInactivityTimer() {
   clearInactivityTimer();
