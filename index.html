@@ -8,7 +8,7 @@
   <meta name="mobile-web-app-capable" content="yes">
   <link rel="apple-touch-icon" href="icon-192.png">
   <link rel="manifest" href="manifest.json">
-  <link rel="stylesheet" href="style.css?v=9">
+  <link rel="stylesheet" href="style.css?v=10">
 </head>
 <body>
   <div id="app">
@@ -30,11 +30,13 @@
     <div id="screen-welcome" class="screen active">
       <div class="screen-content welcome-content">
         <div class="welcome-text">
-          <h1 class="welcome-heading">MAXtv<br>20 godina dio<br>vašeg programa!</h1>
-          <p class="welcome-subtitle">Povodom rođendana nagrađujemo<br>20 vjernih korisnika Samsung televizorom!</p>
+          <div class="welcome-intro-text">
+            <h1 class="welcome-heading">MAXtv<br>20 godina dio<br>vašeg programa!</h1>
+            <p class="welcome-subtitle">Povodom rođendana nagrađujemo<br>20 vjernih korisnika Samsung televizorom!</p>
+          </div>
           <div class="welcome-buttons">
-            <button class="btn-primary" onclick="showRegistrationScreen()">SUDJELUJ</button>
-            <button class="btn-outline" onclick="showRulesScreen()">VIŠE INFORMACIJA</button>
+            <button class="btn-primary btn-swap" id="btn-swap-1" onclick="showRegistrationScreen()">SUDJELUJ</button>
+            <button class="btn-outline btn-swap" id="btn-swap-2" onclick="showRulesScreen()">VIŠE INFORMACIJA</button>
           </div>
         </div>
         <div class="welcome-tv-carousel">
@@ -161,8 +163,8 @@
 
   </div>
 
-  <script src="supabase-config.js?v=9"></script>
-  <script src="app.js?v=9"></script>
+  <script src="supabase-config.js?v=10"></script>
+  <script src="app.js?v=10"></script>
   <script>
     // Orientation-aware canvas fit: #app is a fixed-size design canvas
     // (1920x1200 landscape / 1200x1920 portrait). Whenever the tablet is

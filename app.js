@@ -434,3 +434,36 @@ buildKeyboard('alpha');
     slides[current].classList.add('active');
   }, 4500);
 })();
+
+// ===== ANTI-BURN-IN: SUDJELUJ / VISE INFORMACIJA SWAP PLACES (every 4.5s) =====
+(function() {
+  const container = document.querySelector('.welcome-buttons');
+  const btn1 = document.getElementById('btn-swap-1');
+  const btn2 = document.getElementById('btn-swap-2');
+  if (!container || !btn1 || !btn2) return;
+  let swapped = false;
+  function applySwap() {
+    if (swapped) {
+      const gap = parseFloat(getComputedStyle(container).gap) || 0;
+      btn1.style.transform = 'translateX(' + (btn2.offsetWidth + gap) + 'px)';
+      btn2.style.transform = 'translateX(-' + (btn1.offsetWidth + gap) + 'px)';
+    } else {
+      btn1.style.transform = '';
+      btn2.style.transform = '';
+    }
+  }
+  setInterval(function() {
+    swapped = !swapped;
+    applySwap();
+  }, 4500);
+})();
+
+// ===== ANTI-BURN-IN: INTRO TEXT FADES OUT FOR 2s EVERY 8s =====
+(function() {
+  const introText = document.querySelector('.welcome-intro-text');
+  if (!introText) return;
+  setInterval(function() {
+    introText.classList.add('dimmed');
+    setTimeout(function() { introText.classList.remove('dimmed'); }, 2000);
+  }, 8000);
+})();

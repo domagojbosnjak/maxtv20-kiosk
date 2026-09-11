@@ -199,6 +199,19 @@ html.orientation-portrait #app {
   flex-shrink: 0;
 }
 
+/* Anti-burn-in: intro heading+subtitle briefly fade out (see app.js) so this
+   static kiosk screen doesn't leave a permanent ghost on the panel. */
+.welcome-intro-text {
+  display: flex;
+  flex-direction: column;
+  gap: 56px;
+  transition: opacity 0.8s ease;
+}
+
+.welcome-intro-text.dimmed {
+  opacity: 0;
+}
+
 .welcome-heading {
   font-family: var(--font-heading);
   font-size: 92px;
@@ -245,6 +258,13 @@ html.orientation-portrait #app {
   flex-wrap: wrap;
   align-items: center;
   gap: 28px;
+}
+
+/* Anti-burn-in: SUDJELUJ / VISE INFORMACIJA periodically trade places (see
+   app.js) - exact pixel offset is computed at runtime since the two buttons
+   are different widths. */
+.btn-swap {
+  transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .welcome-buttons .btn-primary,
@@ -712,6 +732,10 @@ html.orientation-portrait #app {
 .orientation-portrait .welcome-text {
   gap: 40px;
   max-width: none;
+}
+
+.orientation-portrait .welcome-intro-text {
+  gap: 40px;
 }
 
 .orientation-portrait .welcome-heading {
