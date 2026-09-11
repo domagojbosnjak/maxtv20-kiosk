@@ -263,7 +263,8 @@ html.orientation-portrait #app {
 /* Anti-burn-in: SUDJELUJ / VISE INFORMACIJA periodically trade places (see
    app.js) - exact pixel offset is computed at runtime since the two buttons
    are different widths. */
-.btn-swap {
+.btn-primary.btn-swap,
+.btn-outline.btn-swap {
   transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
@@ -725,31 +726,31 @@ html.orientation-portrait #app {
 .orientation-portrait .welcome-content {
   flex-direction: column;
   justify-content: center;
-  gap: 40px;
+  gap: 90px;
   max-width: none;
 }
 
 .orientation-portrait .welcome-text {
-  gap: 40px;
+  gap: 48px;
   max-width: none;
 }
 
 .orientation-portrait .welcome-intro-text {
-  gap: 40px;
+  gap: 48px;
 }
 
 .orientation-portrait .welcome-heading {
-  font-size: 64px;
+  font-size: 80px;
 }
 
 .orientation-portrait .welcome-tv-carousel {
-  width: 420px;
-  height: 266px;
-  max-width: 70vw;
+  width: 640px;
+  height: 405px;
+  max-width: 82vw;
 }
 
 .orientation-portrait .welcome-subtitle {
-  font-size: 32px;
+  font-size: 40px;
   max-width: 900px;
 }
 
