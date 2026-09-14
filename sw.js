@@ -1,4 +1,4 @@
-var CACHE_NAME = 'maxtv20-v14';
+var CACHE_NAME = 'maxtv20-v15';
 
 var ASSETS = [
   './',
