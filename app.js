@@ -474,12 +474,12 @@ document.addEventListener('contextmenu', function(e) { e.preventDefault(); });
 buildKeyboard('alpha');
 
 // ===== WELCOME SCREEN: ONE COORDINATED ANTI-BURN-IN CYCLE =====
-// Previously the TV carousel, the button swap and the text fade each ran on
-// their own independent timer, so they drifted in and out of phase with
-// each other - it read as random, unrelated movement. Now everything ticks
-// together on a single clock: every ANTI_BURN_IN_TICK_MS, the TV image
-// advances AND the buttons swap places in the same beat, so there's one
-// clear, predictable rhythm instead of three overlapping ones.
+// Everything on this screen moves on the SAME single clock, in the same
+// beat, so it reads as one deliberate rhythm instead of several unrelated
+// timers drifting in and out of phase: every ANTI_BURN_IN_TICK_MS the TV
+// image advances (with its bounce-in), the buttons swap places, AND the
+// heading + subtitle replay their "fly in" entrance (subtitle a beat after
+// the heading, via its own built-in animation-delay) - all at once.
 (function() {
   const ANTI_BURN_IN_TICK_MS = 6000;
 
@@ -487,9 +487,22 @@ buildKeyboard('alpha');
   const buttonRow = document.querySelector('.welcome-buttons');
   const btn1 = document.getElementById('btn-swap-1');
   const btn2 = document.getElementById('btn-swap-2');
+  const heading = document.querySelector('.welcome-heading');
+  const subtitle = document.querySelector('.welcome-subtitle');
 
   let currentSlide = 0;
   let swapped = false;
+
+  // Restarts an element's CSS-declared animation from 0% by briefly
+  // overriding it with an inline "none" (higher specificity than the
+  // class-based rule), forcing a reflow, then clearing the override so the
+  // original rule re-applies fresh.
+  function replay(el) {
+    if (!el) return;
+    el.style.animation = 'none';
+    void el.offsetWidth;
+    el.style.animation = '';
+  }
 
   function tick() {
     if (slides.length >= 2) {
@@ -508,9 +521,11 @@ buildKeyboard('alpha');
         btn2.style.transform = '';
       }
     }
+    replay(heading);
+    replay(subtitle);
   }
 
-  if (slides.length >= 2 || (buttonRow && btn1 && btn2)) {
+  if (slides.length >= 2 || (buttonRow && btn1 && btn2) || heading || subtitle) {
     setInterval(tick, ANTI_BURN_IN_TICK_MS);
   }
 })();
