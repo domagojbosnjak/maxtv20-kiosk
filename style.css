@@ -197,7 +197,8 @@ html.orientation-portrait #app {
    showScreen() forces a reflow between removing/re-adding .active, which
    restarts these animations from the start each time). */
 @keyframes fly-in-settle {
-  0%   { opacity: 0; transform: translateY(-46px); }
+  0%   { opacity: 0; transform: translateY(-90px); }
+  70%  { opacity: 1; transform: translateY(6px); }
   100% { opacity: 1; transform: translateY(0); }
 }
 
@@ -212,7 +213,7 @@ html.orientation-portrait #app {
    actually restarts each time the welcome screen re-activates - a bare
    .welcome-heading rule would only ever play once, on first page load. */
 .screen.active .welcome-heading {
-  animation: fly-in-settle 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation: fly-in-settle 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
 .welcome-subtitle {
@@ -228,8 +229,8 @@ html.orientation-portrait #app {
 }
 
 .screen.active .welcome-subtitle {
-  animation: fly-in-settle 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
-  animation-delay: 0.32s;
+  animation: fly-in-settle 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: 0.45s;
 }
 
 .welcome-tv-carousel {
@@ -238,6 +239,15 @@ html.orientation-portrait #app {
   max-width: 42vw;
   height: 520px;
   flex-shrink: 0;
+  /* Continuous "grows, bounces, shrinks back" idle motion - independent of
+     the 6s carousel switch below, so the TV always visibly bounces rather
+     than only popping once per switch (which read as barely-there). */
+  animation: tv-idle-pulse 3.4s cubic-bezier(0.45, 0, 0.55, 1) infinite;
+}
+
+@keyframes tv-idle-pulse {
+  0%, 100% { transform: scale(1); }
+  50%      { transform: scale(1.06); }
 }
 
 .tv-slide {
