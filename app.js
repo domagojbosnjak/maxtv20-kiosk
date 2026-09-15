@@ -392,8 +392,26 @@ async function finishSurvey() {
   if (!answerQ2) return;
   showScreen('screen-thankyou');
   clearInactivityTimer();
+  startThankyouAnim();
   await saveEntry(regName, regPhone, answerQ1, answerQ2);
   startAutoReturn();
+}
+
+// ===== THANK YOU SCREEN: REPEATING "MAGNETIC" ENTRANCE =====
+// Same fly-in-settle used on the welcome screen, replayed every few seconds
+// for as long as this screen is shown (instead of playing once and then
+// sitting still for the rest of the 8s auto-return wait).
+let thankyouAnimTimer = null;
+
+function startThankyouAnim() {
+  clearThankyouAnim();
+  var title = document.querySelector('.thankyou-title');
+  if (!title) return;
+  thankyouAnimTimer = setInterval(() => replay(title), 3500);
+}
+
+function clearThankyouAnim() {
+  if (thankyouAnimTimer) { clearInterval(thankyouAnimTimer); thankyouAnimTimer = null; }
 }
 
 // ===== RESET =====
@@ -402,6 +420,7 @@ let autoReturnTimer = null;
 function goToStart() {
   clearAutoReturn();
   clearInactivityTimer();
+  clearThankyouAnim();
   regName = '';
   regPhone = '';
   answerQ1 = '';
@@ -473,6 +492,18 @@ document.addEventListener('contextmenu', function(e) { e.preventDefault(); });
 
 buildKeyboard('alpha');
 
+// Restarts an element's CSS-declared "magnetic" animation from 0% by
+// briefly overriding it with an inline "none" (higher specificity than the
+// class-based rule), forcing a reflow, then clearing the override so the
+// original rule re-applies fresh. Shared by the welcome-screen tick below
+// and the thank-you screen's repeat timer.
+function replay(el) {
+  if (!el) return;
+  el.style.animation = 'none';
+  void el.offsetWidth;
+  el.style.animation = '';
+}
+
 // ===== WELCOME SCREEN: ONE COORDINATED ANTI-BURN-IN CYCLE =====
 // Everything on this screen moves on the SAME single clock, in the same
 // beat, so it reads as one deliberate rhythm instead of several unrelated
@@ -492,17 +523,6 @@ buildKeyboard('alpha');
 
   let currentSlide = 0;
   let swapped = false;
-
-  // Restarts an element's CSS-declared animation from 0% by briefly
-  // overriding it with an inline "none" (higher specificity than the
-  // class-based rule), forcing a reflow, then clearing the override so the
-  // original rule re-applies fresh.
-  function replay(el) {
-    if (!el) return;
-    el.style.animation = 'none';
-    void el.offsetWidth;
-    el.style.animation = '';
-  }
 
   function tick() {
     if (slides.length >= 2) {
