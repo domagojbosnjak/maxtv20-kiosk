@@ -8,7 +8,7 @@
   <meta name="mobile-web-app-capable" content="yes">
   <link rel="apple-touch-icon" href="icon-192.png">
   <link rel="manifest" href="manifest.json">
-  <link rel="stylesheet" href="style.css?v=15">
+  <link rel="stylesheet" href="style.css?v=16">
 </head>
 <body>
   <div id="app">
@@ -35,7 +35,7 @@
             <p class="welcome-subtitle">Povodom rođendana nagrađujemo<br>20 vjernih korisnika Samsung televizorom!</p>
           </div>
           <div class="welcome-buttons">
-            <button class="btn-primary btn-swap" id="btn-swap-1" onclick="showRegistrationScreen()">Sudjeluj</button>
+            <button class="btn-primary btn-swap" id="btn-swap-1" onclick="showRegistrationScreen()">Sudjelujte</button>
             <button class="btn-outline btn-swap" id="btn-swap-2" onclick="showRulesScreen()">Više informacija</button>
           </div>
         </div>
@@ -49,7 +49,7 @@
     <!-- SCREEN - RULES (pravila nagradnog natjecaja) -->
     <div id="screen-rules" class="screen">
       <div class="screen-content rules-content">
-        <h2 class="rules-title">PRAVILA NAGRADNOG NATJEČAJA</h2>
+        <h2 class="rules-title">PRAVILA NAGRADNE IGRE</h2>
         <div class="rules-text" id="rules-text">
           <p><strong>1. UVODNE NAPOMENE</strong><br>Hrvatski Telekom d.d., Radnička cesta 21, 10 000 Zagreb, OIB: 81793146560 (dalje: Priređivač) organizira nagradnu igru "MAXtv 20 godina zajedno" (dalje: Nagradna igra) u svrhu promidžbe MAXtv usluge. Nagradna igra traje od 21.9.2026. od 00:00 sati do 31.10.2026. do 23:59:59 sati.</p>
 
@@ -59,13 +59,13 @@
 
           <p><strong>4. NAGRADE</strong><br>Ukupni fond nagrada iznosi 18.725,00 € i uključuje 20 Samsung televizora (QE55S85HAEXXH, 139,7 cm/55", OLED, 4K UHD Smart TV), svaki u vrijednosti 936,25 € s PDV-om. Nagrade nisu prenosive na treće osobe i ne mogu se zamijeniti za novac ili drugu nagradu. Ako se u Nagradnoj igri prijavi manje sudionika od broja nagrada, dodijelit će se onoliko nagrada koliko je sudionika sudjelovalo.</p>
 
-          <p><strong>5. IZVLAČENJE I OBAVJEŠTAVANJE DOBITNIKA</strong><br>Nagradno izvlačenje 20 dobitnika održat će se javno 4.11.2026. u prostorijama Priređivača, uz nadzor tročlane komisije. Dobitnici će biti obaviješteni telefonskim pozivom na broj mobitela upisan na tabletu, u roku od 48 sati od izvlačenja (najviše 3 pokušaja poziva u 3 radna dana). Ako se dobitnik ne javi u tom roku, gubi pravo na nagradu i organizira se naknadno izvlačenje zamjenskog dobitnika. Nagradu je potrebno preuzeti u roku od 30 dana od obavijesti. Rezultati će biti objavljeni na www.hrvatskitelekom.hr/obavijesti u roku od 8 dana od izvlačenja.</p>
+          <p><strong>5. IZVLAČENJE I OBAVJEŠTAVANJE DOBITNIKA</strong><br>Nagradno izvlačenje 20 dobitnika održat će se javno 4.11.2026. u prostorijama Priređivača, uz nadzor tročlane komisije. Dobitnici će biti obaviješteni telefonskim pozivom na broj mobitela upisan na tabletu, u roku od 48 sati od izvlačenja. Nagradu je potrebno preuzeti u roku od 30 dana od obavijesti. Rezultati će biti objavljeni na www.hrvatskitelekom.hr/obavijesti u roku od 8 dana od izvlačenja.</p>
 
           <p><strong>6. ZAŠTITA OSOBNIH PODATAKA</strong><br>Voditelj obrade osobnih podataka je Hrvatski Telekom d.d. Prikupljaju se ime, prezime i broj mobitela, isključivo u svrhu provedbe Nagradne igre i kontaktiranja dobitnika. Podaci se ne prosljeđuju trećim stranama (osim pružatelju poštanskih usluga radi dostave nagrade) i brišu se najkasnije godinu dana od prikupljanja. Ime i prezime dobitnika javno se objavljuju (tiskani, zvučni, slikovni i video kanali) radi transparentnosti izvlačenja, do 31.5.2027. Sudionik ima pravo pristupa, ispravka i brisanja svojih podataka te pravo na prigovor - za sva pitanja obratite se na osobni.podaci@t.ht.hr.</p>
 
           <p><strong>7. OSTALO</strong><br>Priređivač ne odgovara za štetu nastalu uslijed tehničkih poteškoća, prekida rada mreže ili drugih okolnosti izvan njegove kontrole. U korist Hrvatskog crvenog križa uplaćuje se 5% ukupne vrijednosti fonda nagrada. Priređivač zadržava pravo prekinuti Nagradnu igru u opravdanim slučajevima, o čemu će javnost biti obaviještena. Sudjelovanjem u Nagradnoj igri sudionik prihvaća ova Pravila u cijelosti. Potpuna, službena Pravila nagradne igre dostupna su na www.hrvatskitelekom.hr/obavijesti.</p>
         </div>
-        <button class="btn-primary" onclick="showRegistrationScreen()">Sudjeluj</button>
+        <button class="btn-primary" onclick="showRegistrationScreen()">Sudjelujte</button>
       </div>
     </div>
 
@@ -163,8 +163,8 @@
 
   </div>
 
-  <script src="supabase-config.js?v=15"></script>
-  <script src="app.js?v=15"></script>
+  <script src="supabase-config.js?v=16"></script>
+  <script src="app.js?v=16"></script>
   <script>
     // Orientation-aware canvas fit: #app is a fixed-size design canvas
     // (1920x1200 landscape / 1200x1920 portrait). Whenever the tablet is

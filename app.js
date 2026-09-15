@@ -76,7 +76,7 @@ const KEYS_ALPHA = [
 
 const KEYS_NUM = [
   ['1','2','3','4','5','6','7','8','9','0'],
-  ['+','-','_','/',':','(',')','!','?'],
+  ['+','-','_','/',':','(',')','!','?','backspace'],
   ['ABC','@','space','.','done']
 ];
 
@@ -224,9 +224,34 @@ document.addEventListener('mousedown', (e) => {
   }
 });
 
+// Explicit "key registered" visual feedback (in addition to CSS :active) -
+// decoupled from the per-key typing handlers above so it's guaranteed to
+// show regardless of preventDefault()/touch quirks on any given key.
+function releasePressedKeys() {
+  document.querySelectorAll('.kb-key.kb-pressed').forEach(function(k) { k.classList.remove('kb-pressed'); });
+}
+document.addEventListener('touchstart', function(e) {
+  var key = e.target.closest('.kb-key');
+  if (key) key.classList.add('kb-pressed');
+});
+document.addEventListener('mousedown', function(e) {
+  var key = e.target.closest('.kb-key');
+  if (key) key.classList.add('kb-pressed');
+});
+document.addEventListener('touchend', releasePressedKeys);
+document.addEventListener('touchcancel', releasePressedKeys);
+document.addEventListener('mouseup', releasePressedKeys);
+
 function toggleShift() {
   shiftActive = !shiftActive;
   buildKeyboard('alpha');
+}
+
+// Auto-capitalize the first letter of each word (e.g. "Pero Perić Peričić")
+// as the name is typed - only rewrites case, never length, so a cursor
+// position captured before calling this stays valid afterwards.
+function autoCapitalizeWords(value) {
+  return value.replace(/(^|\s)(\p{L})/gu, function(m, before, letter) { return before + letter.toUpperCase(); });
 }
 
 function typeKey(key) {
@@ -235,16 +260,21 @@ function typeKey(key) {
   var len = input.value.length;
   var start = len, end = len;
   try { start = input.selectionStart || len; end = input.selectionEnd || len; } catch(ex) {}
+  var finalPos = start;
   if (key === 'backspace') {
     if (start > 0) {
       input.value = input.value.slice(0, start - 1) + input.value.slice(end);
-      try { input.setSelectionRange(start - 1, start - 1); } catch(ex) {}
+      finalPos = start - 1;
     }
   } else {
     if (input.maxLength && input.value.length >= input.maxLength) return;
     input.value = input.value.slice(0, start) + key + input.value.slice(end);
-    try { input.setSelectionRange(start + 1, start + 1); } catch(ex) {}
+    finalPos = start + 1;
   }
+  if (input.id === 'reg-name') {
+    input.value = autoCapitalizeWords(input.value);
+  }
+  try { input.setSelectionRange(finalPos, finalPos); } catch(ex) {}
   if (shiftActive && key !== 'backspace') {
     shiftActive = false;
     buildKeyboard('alpha');
@@ -372,7 +402,7 @@ function goToStart() {
 
 function startAutoReturn() {
   clearAutoReturn();
-  autoReturnTimer = setTimeout(() => { goToStart(); }, 3000);
+  autoReturnTimer = setTimeout(() => { goToStart(); }, 8000);
 }
 
 function clearAutoReturn() {

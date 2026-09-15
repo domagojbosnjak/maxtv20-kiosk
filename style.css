@@ -192,6 +192,15 @@ html.orientation-portrait #app {
   gap: 56px;
 }
 
+/* "Magnetic motion" entrance: heading flies in first, subtitle follows -
+   replays every time the welcome screen becomes active again (app.js's
+   showScreen() forces a reflow between removing/re-adding .active, which
+   restarts these animations from the start each time). */
+@keyframes fly-in-settle {
+  0%   { opacity: 0; transform: translateY(-46px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
 .welcome-heading {
   font-family: var(--font-heading);
   font-size: 92px;
@@ -199,16 +208,28 @@ html.orientation-portrait #app {
   line-height: 1.05;
 }
 
+/* Scoped to .screen.active (not just .welcome-heading) so the animation
+   actually restarts each time the welcome screen re-activates - a bare
+   .welcome-heading rule would only ever play once, on first page load. */
+.screen.active .welcome-heading {
+  animation: fly-in-settle 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
 .welcome-subtitle {
   /* 'TeleNeoOriginal' (var(--font-body)) only has Thin(100)/ExtraBold(800)
      faces, so weight 400 was silently rendering as Thin - looked too light.
-     'TeleNeo' has a real Regular/Medium face, so use it directly here. */
+     'TeleNeo' has a real Regular/Medium/Bold face, so use it directly here. */
   font-family: 'TeleNeo', sans-serif;
   font-size: 40px;
-  font-weight: 500;
+  font-weight: 700;
   line-height: 1.35;
-  color: var(--gray-text);
+  color: rgba(255,255,255,0.95);
   max-width: 780px;
+}
+
+.screen.active .welcome-subtitle {
+  animation: fly-in-settle 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation-delay: 0.32s;
 }
 
 .welcome-tv-carousel {
@@ -233,6 +254,16 @@ html.orientation-portrait #app {
 
 .tv-slide.active {
   opacity: 1;
+  animation: tv-bounce-in 0.9s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* "Grows, overshoots, settles back" - the TV pops in on each carousel
+   change (and on first load) instead of just crossfading in flat. */
+@keyframes tv-bounce-in {
+  0%   { transform: scale(0.82); }
+  55%  { transform: scale(1.08); }
+  78%  { transform: scale(0.97); }
+  100% { transform: scale(1); }
 }
 
 .welcome-buttons {
@@ -287,11 +318,17 @@ html.orientation-portrait #app {
 }
 
 .btn-outline {
+  /* outline (not border) so the 5px ring is drawn without adding to the
+     box's rendered size - keeps this pill EXACTLY the same height/width
+     as .btn-primary for the same text length, instead of the border
+     making it a few px larger on every side. */
   align-self: flex-start;
   padding: 30px 48px;
   background: transparent;
   color: var(--white);
-  border: 5px solid var(--white);
+  border: none;
+  outline: 5px solid var(--white);
+  outline-offset: -5px;
   border-radius: 100px;
   font-family: var(--font-heading);
   font-size: 28px;
@@ -401,11 +438,14 @@ html.orientation-portrait #app {
 }
 
 .gdpr-text {
-  font-family: var(--font-body);
+  /* Same 'TeleNeoOriginal' Thin/ExtraBold-only pitfall as .welcome-subtitle -
+     weight 400 on var(--font-body) silently rendered as the Thin(100) face
+     and read as too light. 'TeleNeo' has a real Medium face. */
+  font-family: 'TeleNeo', sans-serif;
   font-size: 24px;
-  font-weight: 400;
+  font-weight: 700;
   line-height: 1.45;
-  color: var(--gray-text);
+  color: rgba(255,255,255,0.9);
 }
 
 /* ===== QUESTION SCREENS (survey) ===== */
@@ -483,6 +523,10 @@ html.orientation-portrait #app {
   line-height: 1.2;
 }
 
+.screen.active .thankyou-title {
+  animation: fly-in-settle 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
 /* ===== RULES SCREEN (pravila nagradnog natjecaja) ===== */
 .rules-content {
   padding: 140px 150px 100px 210px;
@@ -554,16 +598,23 @@ html.orientation-portrait #app {
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: background 0.1s ease;
+  transition: background 0.08s ease, transform 0.08s ease;
   color: var(--white);
   background: #636366;
   flex: 1;
   max-width: 84px;
+  position: relative;
 }
 
-.kb-key:active {
-  background: #8E8E93;
-  transform: scale(0.95);
+/* .kb-pressed is toggled explicitly in app.js (not just relying on native
+   :active) so the "this key registered" feedback is guaranteed even inside
+   the custom touchstart/touchend-driven keyboard. Pops UP/grows rather than
+   shrinking, so it reads clearly as "pressed" rather than "disabled". */
+.kb-key:active,
+.kb-key.kb-pressed {
+  background: var(--magenta);
+  transform: scale(1.15);
+  z-index: 5;
 }
 
 .kb-key-space {

@@ -1,7 +1,7 @@
 {
   "name": "MAXtv 20 - Nagradna igra",
   "short_name": "MAXtv 20",
-  "description": "MAXtv slavi 20 godina! Sudjeluj i osvoji Samsung televizor.",
+  "description": "MAXtv slavi 20 godina! Sudjelujte i osvojite Samsung televizor.",
   "start_url": "./index.html",
   "display": "fullscreen",
   "orientation": "any",
