@@ -524,8 +524,18 @@ html.orientation-portrait #app {
   line-height: 1.2;
 }
 
+/* Flies in once (fly-in-settle), then - once landed - keeps gently
+   hopping in place for as long as this screen is shown, instead of
+   sitting still or re-triggering the whole entrance over and over. */
 .screen.active .thankyou-title {
-  animation: fly-in-settle 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation: fly-in-settle 0.8s cubic-bezier(0.16, 1, 0.3, 1) both,
+             text-hop 2.2s ease-in-out 0.8s infinite;
+}
+
+@keyframes text-hop {
+  0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+  40% { transform: translateY(-22px); }
+  65% { transform: translateY(-9px); }
 }
 
 /* ===== RULES SCREEN (pravila nagradnog natjecaja) ===== */

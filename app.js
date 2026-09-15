@@ -392,26 +392,8 @@ async function finishSurvey() {
   if (!answerQ2) return;
   showScreen('screen-thankyou');
   clearInactivityTimer();
-  startThankyouAnim();
   await saveEntry(regName, regPhone, answerQ1, answerQ2);
   startAutoReturn();
-}
-
-// ===== THANK YOU SCREEN: REPEATING "MAGNETIC" ENTRANCE =====
-// Same fly-in-settle used on the welcome screen, replayed every few seconds
-// for as long as this screen is shown (instead of playing once and then
-// sitting still for the rest of the 8s auto-return wait).
-let thankyouAnimTimer = null;
-
-function startThankyouAnim() {
-  clearThankyouAnim();
-  var title = document.querySelector('.thankyou-title');
-  if (!title) return;
-  thankyouAnimTimer = setInterval(() => replay(title), 3500);
-}
-
-function clearThankyouAnim() {
-  if (thankyouAnimTimer) { clearInterval(thankyouAnimTimer); thankyouAnimTimer = null; }
 }
 
 // ===== RESET =====
@@ -420,7 +402,6 @@ let autoReturnTimer = null;
 function goToStart() {
   clearAutoReturn();
   clearInactivityTimer();
-  clearThankyouAnim();
   regName = '';
   regPhone = '';
   answerQ1 = '';
