@@ -124,6 +124,12 @@ function closeDiacriticPopup() {
 function buildKeyboard(mode) {
   keyboardMode = mode;
   const keys = mode === 'alpha' ? KEYS_ALPHA : KEYS_NUM;
+  // On the name field, show the keyboard already "shifted" at the start of
+  // every word (like a phone keyboard's auto-cap) - so it's visually clear
+  // BEFORE typing that this letter will land as a capital, matching what
+  // autoCapitalizeWords() then enforces on the value.
+  const wordStartAutoCap = mode === 'alpha' && activeInput && activeInput.id === 'reg-name' && isWordStart(activeInput);
+  const effectiveShift = shiftActive || wordStartAutoCap;
   keys.forEach((row, i) => {
     const rowEl = document.getElementById(`kb-row-${i + 1}`);
     rowEl.innerHTML = '';
@@ -143,7 +149,7 @@ function buildKeyboard(mode) {
         btn.textContent = 'OK';
         btn.addEventListener('touchstart', (e) => { e.preventDefault(); advanceToNextField(); });
       } else if (key === 'shift') {
-        btn.className = 'kb-key kb-key-shift' + (shiftActive ? ' active' : '');
+        btn.className = 'kb-key kb-key-shift' + (effectiveShift ? ' active' : '');
         btn.innerHTML = '&#8679;';
         btn.addEventListener('touchstart', (e) => { e.preventDefault(); toggleShift(); });
       } else if (key === '123') {
@@ -156,7 +162,7 @@ function buildKeyboard(mode) {
         btn.addEventListener('touchstart', (e) => { e.preventDefault(); buildKeyboard('alpha'); });
       } else {
         btn.className = 'kb-key';
-        const displayKey = shiftActive ? key.toUpperCase() : key.toLowerCase();
+        const displayKey = effectiveShift ? key.toUpperCase() : key.toLowerCase();
         btn.textContent = keyboardMode === 'num' ? key : displayKey;
         const charForKey = keyboardMode === 'num' ? key : displayKey;
         const hasDiacritics = DIACRITICS[charForKey];
@@ -184,7 +190,7 @@ function buildKeyboard(mode) {
       if (isRegularKey) {
         btn.addEventListener('mousedown', (e) => {
           e.preventDefault();
-          const ck = keyboardMode === 'num' ? key : (shiftActive ? key.toUpperCase() : key.toLowerCase());
+          const ck = keyboardMode === 'num' ? key : (effectiveShift ? key.toUpperCase() : key.toLowerCase());
           const hasDiac = DIACRITICS[ck];
           longPressActive = false;
           if (hasDiac) { longPressTimer = setTimeout(() => { showDiacriticPopup(btn, hasDiac); }, 400); }
@@ -193,7 +199,7 @@ function buildKeyboard(mode) {
           e.preventDefault();
           if (longPressTimer) { clearTimeout(longPressTimer); longPressTimer = null; }
           if (!longPressActive) {
-            const ck = keyboardMode === 'num' ? key : (shiftActive ? key.toUpperCase() : key.toLowerCase());
+            const ck = keyboardMode === 'num' ? key : (effectiveShift ? key.toUpperCase() : key.toLowerCase());
             typeKey(ck);
           }
           longPressActive = false;
@@ -254,6 +260,15 @@ function autoCapitalizeWords(value) {
   return value.replace(/(^|\s)(\p{L})/gu, function(m, before, letter) { return before + letter.toUpperCase(); });
 }
 
+// True when the cursor sits at the very start of the field, or right after
+// a space - i.e. the next letter typed will be word-initial.
+function isWordStart(input) {
+  var pos = input.value.length;
+  try { pos = input.selectionStart != null ? input.selectionStart : pos; } catch(ex) {}
+  if (pos === 0) return true;
+  return /\s/.test(input.value.charAt(pos - 1));
+}
+
 function typeKey(key) {
   if (!activeInput) return;
   const input = activeInput;
@@ -275,8 +290,13 @@ function typeKey(key) {
     input.value = autoCapitalizeWords(input.value);
   }
   try { input.setSelectionRange(finalPos, finalPos); } catch(ex) {}
-  if (shiftActive && key !== 'backspace') {
-    shiftActive = false;
+  var shiftWasConsumed = shiftActive && key !== 'backspace';
+  if (shiftWasConsumed) { shiftActive = false; }
+  // Rebuild whenever a one-shot shift was just used (existing behaviour),
+  // AND on every keystroke in reg-name so the keyboard's "next letter will
+  // be capital" look (see buildKeyboard's wordStartAutoCap) stays in sync
+  // with the cursor as the user crosses word boundaries.
+  if (keyboardMode === 'alpha' && (shiftWasConsumed || input.id === 'reg-name')) {
     buildKeyboard('alpha');
   }
   input.dispatchEvent(new Event('input'));
