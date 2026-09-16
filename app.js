@@ -392,8 +392,28 @@ async function finishSurvey() {
   if (!answerQ2) return;
   showScreen('screen-thankyou');
   clearInactivityTimer();
+  startThankyouAnim();
   await saveEntry(regName, regPhone, answerQ1, answerQ2);
   startAutoReturn();
+}
+
+// ===== THANK YOU SCREEN: REPEAT THE SAME "FLY IN" AS THE WELCOME HL =====
+// Its own dedicated timer (not the welcome screen's 6s tick, whose timing
+// relative to this screen's 8s window isn't guaranteed to land clearly) so
+// it reliably plays "flies in, briefly resets, flies in again" more than
+// once while this screen is shown - same fly-in-settle animation/replay()
+// as the welcome heading, just on its own schedule.
+let thankyouAnimTimer = null;
+
+function startThankyouAnim() {
+  clearThankyouAnim();
+  var title = document.querySelector('.thankyou-title');
+  if (!title) return;
+  thankyouAnimTimer = setInterval(() => replay(title), 3000);
+}
+
+function clearThankyouAnim() {
+  if (thankyouAnimTimer) { clearInterval(thankyouAnimTimer); thankyouAnimTimer = null; }
 }
 
 // ===== RESET =====
@@ -402,6 +422,7 @@ let autoReturnTimer = null;
 function goToStart() {
   clearAutoReturn();
   clearInactivityTimer();
+  clearThankyouAnim();
   regName = '';
   regPhone = '';
   answerQ1 = '';
@@ -491,10 +512,7 @@ function replay(el) {
 // and out of phase: every ANTI_BURN_IN_TICK_MS the TV image advances (with
 // its bounce-in), the buttons swap places, AND the heading + subtitle
 // replay their "fly in" entrance (subtitle a beat after the heading, via
-// its own built-in animation-delay) - all at once. The thank-you screen's
-// title uses that exact same fly-in-settle animation and replays on this
-// same tick too, whether or not that screen happens to be visible right
-// now (replay() on a hidden element is harmless).
+// its own built-in animation-delay) - all at once.
 (function() {
   const ANTI_BURN_IN_TICK_MS = 6000;
 
@@ -504,7 +522,6 @@ function replay(el) {
   const btn2 = document.getElementById('btn-swap-2');
   const heading = document.querySelector('.welcome-heading');
   const subtitle = document.querySelector('.welcome-subtitle');
-  const thankyouTitle = document.querySelector('.thankyou-title');
 
   let currentSlide = 0;
   let swapped = false;
@@ -528,10 +545,9 @@ function replay(el) {
     }
     replay(heading);
     replay(subtitle);
-    replay(thankyouTitle);
   }
 
-  if (slides.length >= 2 || (buttonRow && btn1 && btn2) || heading || subtitle || thankyouTitle) {
+  if (slides.length >= 2 || (buttonRow && btn1 && btn2) || heading || subtitle) {
     setInterval(tick, ANTI_BURN_IN_TICK_MS);
   }
 })();
