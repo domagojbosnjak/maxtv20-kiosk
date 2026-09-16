@@ -486,12 +486,15 @@ function replay(el) {
 }
 
 // ===== WELCOME SCREEN: ONE COORDINATED ANTI-BURN-IN CYCLE =====
-// Everything on this screen moves on the SAME single clock, in the same
-// beat, so it reads as one deliberate rhythm instead of several unrelated
-// timers drifting in and out of phase: every ANTI_BURN_IN_TICK_MS the TV
-// image advances (with its bounce-in), the buttons swap places, AND the
-// heading + subtitle replay their "fly in" entrance (subtitle a beat after
-// the heading, via its own built-in animation-delay) - all at once.
+// Everything moves on the SAME single clock, in the same beat, so it reads
+// as one deliberate rhythm instead of several unrelated timers drifting in
+// and out of phase: every ANTI_BURN_IN_TICK_MS the TV image advances (with
+// its bounce-in), the buttons swap places, AND the heading + subtitle
+// replay their "fly in" entrance (subtitle a beat after the heading, via
+// its own built-in animation-delay) - all at once. The thank-you screen's
+// title uses that exact same fly-in-settle animation and replays on this
+// same tick too, whether or not that screen happens to be visible right
+// now (replay() on a hidden element is harmless).
 (function() {
   const ANTI_BURN_IN_TICK_MS = 6000;
 
@@ -501,6 +504,7 @@ function replay(el) {
   const btn2 = document.getElementById('btn-swap-2');
   const heading = document.querySelector('.welcome-heading');
   const subtitle = document.querySelector('.welcome-subtitle');
+  const thankyouTitle = document.querySelector('.thankyou-title');
 
   let currentSlide = 0;
   let swapped = false;
@@ -524,9 +528,10 @@ function replay(el) {
     }
     replay(heading);
     replay(subtitle);
+    replay(thankyouTitle);
   }
 
-  if (slides.length >= 2 || (buttonRow && btn1 && btn2) || heading || subtitle) {
+  if (slides.length >= 2 || (buttonRow && btn1 && btn2) || heading || subtitle || thankyouTitle) {
     setInterval(tick, ANTI_BURN_IN_TICK_MS);
   }
 })();
