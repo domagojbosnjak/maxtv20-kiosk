@@ -1,11 +1,11 @@
-var CACHE_NAME = 'maxtv20-v22';
+var CACHE_NAME = 'maxtv20-v23';
 
 var ASSETS = [
   './',
   './index.html',
-  './style.css?v=22',
-  './app.js?v=22',
-  './supabase-config.js?v=22',
+  './style.css?v=23',
+  './app.js?v=23',
+  './supabase-config.js?v=23',
   './manifest.json',
   './ht-logo-white.svg',
   './icon-192.png',
