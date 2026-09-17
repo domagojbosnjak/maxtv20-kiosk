@@ -507,12 +507,12 @@ function replay(el) {
 }
 
 // ===== WELCOME SCREEN: ONE COORDINATED ANTI-BURN-IN CYCLE =====
-// Everything moves on the SAME single clock, in the same beat, so it reads
-// as one deliberate rhythm instead of several unrelated timers drifting in
-// and out of phase: every ANTI_BURN_IN_TICK_MS the TV image advances (with
-// its bounce-in), the buttons swap places, AND the heading + subtitle
-// replay their "fly in" entrance (subtitle a beat after the heading, via
-// its own built-in animation-delay) - all at once.
+// Everything runs off the SAME single clock (every ANTI_BURN_IN_TICK_MS),
+// but per Telekom's "Magnetic Motion" brand spec (Push/Pull - "one element
+// starts the motion, the others follow at intervals"; NOT "all elements
+// experience motion at the same time"), the moments are staggered rather
+// than firing in the same instant: TV first, buttons a beat later, then
+// heading (subtitle follows the heading via its own built-in CSS delay).
 (function() {
   const ANTI_BURN_IN_TICK_MS = 6000;
 
@@ -532,19 +532,23 @@ function replay(el) {
       currentSlide = (currentSlide + 1) % slides.length;
       slides[currentSlide].classList.add('active');
     }
-    if (buttonRow && btn1 && btn2) {
-      swapped = !swapped;
-      if (swapped) {
-        const gap = parseFloat(getComputedStyle(buttonRow).gap) || 0;
-        btn1.style.transform = 'translateX(' + (btn2.offsetWidth + gap) + 'px)';
-        btn2.style.transform = 'translateX(-' + (btn1.offsetWidth + gap) + 'px)';
-      } else {
-        btn1.style.transform = '';
-        btn2.style.transform = '';
+    setTimeout(function() {
+      if (buttonRow && btn1 && btn2) {
+        swapped = !swapped;
+        if (swapped) {
+          const gap = parseFloat(getComputedStyle(buttonRow).gap) || 0;
+          btn1.style.transform = 'translateX(' + (btn2.offsetWidth + gap) + 'px)';
+          btn2.style.transform = 'translateX(-' + (btn1.offsetWidth + gap) + 'px)';
+        } else {
+          btn1.style.transform = '';
+          btn2.style.transform = '';
+        }
       }
-    }
-    replay(heading);
-    replay(subtitle);
+    }, 180);
+    setTimeout(function() {
+      replay(heading);
+      replay(subtitle);
+    }, 360);
   }
 
   if (slides.length >= 2 || (buttonRow && btn1 && btn2) || heading || subtitle) {
