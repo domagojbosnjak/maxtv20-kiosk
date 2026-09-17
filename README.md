@@ -86,10 +86,20 @@ Provjera statusa: `gh api repos/domagojbosnjak/maxtv20-kiosk/actions/runs
   ponavlja "fly-in" animaciju na HL/SHL - sve namjerno na istom ritmu da
   se ne čini kaotično. Ekran zahvale ima svoj zaseban 3s tajmer koji
   ponavlja ISTU fly-in animaciju kao HL (vidi `startThankyouAnim`).
-- **`style.css`** - sve "magnetic motion" animacije su CSS `@keyframes`
-  (`fly-in-settle`, `tv-bounce-in`) s elastičnom `cubic-bezier(0.34, 1.56,
-  0.64, 1)` krivuljom (overshoot pa settle - to je taj "magnetski" osjećaj).
-  Portrait layout je pod `.orientation-portrait` prefiksom.
+- **`style.css`** - "magnetic motion" animacije (`fly-in-settle`,
+  `tv-bounce-in`) su usklađene sa stvarnom Telekom brand specifikacijom
+  (brand.telekom.com → Design → Motion Design → Motion Identity →
+  Magnetic Motion, treba login): NEMA elastičnog/overshoot odskoka nigdje
+  - to je službeno "Don't". Koriste se dvije službene krivulje: Expressive
+  `cubic-bezier(0.9, 0, 0.1, 1)` 1s (TV, gumbi) i Subtle
+  `cubic-bezier(0.7, 0, 0.3, 1)` 1.5s (HL/SHL/zahvala tekst - veće
+  površine idu na mirniju opciju). Pokreti su namjerno razmaknuti u
+  vremenu (TV → +180ms gumbi → +360ms tekst), ne svi u istoj sekundi -
+  to je njihov "Push/Pull" princip ("jedan element kreće, ostali slijede
+  s razmakom"). Landscape TV slika je `align-items:stretch` +
+  `aspect-ratio` uskladena s visinom `.welcome-text` stupca (ne fiksna
+  px veličina) da ostane unutar istih margina kao tekst. Portrait layout
+  je pod `.orientation-portrait` prefiksom (odvojen, fiksne dimenzije).
 - **`supabase-config.js`** - Supabase backend (tablica
   `maxtv20_prijave`), offline-first: ako nema neta, prijava ide u
   `localStorage` red (`maxtv20_pending_entries`) i šalje se automatski čim
