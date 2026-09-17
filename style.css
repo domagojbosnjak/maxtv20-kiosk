@@ -170,7 +170,10 @@ html.orientation-portrait #app {
    so the whole group reads as a single balanced unit on screen. */
 .welcome-content {
   flex-direction: row;
-  align-items: center;
+  /* stretch (not center) so the TV's height is tied to the text column's
+     own height below, instead of using its own fixed px size that could
+     run taller/shorter than the text block. */
+  align-items: stretch;
   justify-content: center;
   max-width: none;
   padding-left: 100px;
@@ -181,6 +184,7 @@ html.orientation-portrait #app {
 .welcome-text {
   display: flex;
   flex-direction: column;
+  justify-content: center;
   gap: 56px;
   max-width: 780px;
   flex-shrink: 0;
@@ -243,10 +247,15 @@ html.orientation-portrait #app {
 }
 
 .welcome-tv-carousel {
+  /* Height comes from the stretched flex row above (matches .welcome-text's
+     own height - heading+subtitle+buttons), width follows from the TV
+     photo's own aspect ratio, capped by max-width as a ceiling. This keeps
+     the TV visually "inside the same margins" as the text instead of
+     spilling taller/shorter than it. */
   position: relative;
-  width: 820px;
+  aspect-ratio: 1200 / 761;
+  width: auto;
   max-width: 42vw;
-  height: 520px;
   flex-shrink: 0;
 }
 
